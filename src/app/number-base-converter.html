@@ -1,8 +1,20 @@
-<main class="main">
+<div class="main">
     <h1>{{title}}</h1>
     <div class="content">
-        <input type="text" [(ngModel)]="numberToConvert"/>
+        <p>From: </p>
+        <select [(ngModel)]="fromBase">
+            @for (base of baseList; track base.name) {
+                <option>{{base.baseNumber}}</option>
+            }
+        </select>
+        <p>To: </p>
+        <select [(ngModel)]="toBase">
+            @for (base of baseList; track base.name) {
+                <option>{{base.baseNumber}}</option>
+            }
+        </select>
+        <input class="input" type="text" [(ngModel)]="numberToConvert"/>
         <button (click)="convertBase()">Convert</button>
-        <p>{{newBase}}</p>
+        <p class="input">{{newBase}}</p>
     </div>
-</main>
+</div>
