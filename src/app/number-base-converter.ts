@@ -30,6 +30,7 @@ export class NumberBaseConverter {
 
   convertBase() {
     this.newBase = "";
+    let newNumber = 0;
 
     if (this.fromBase != null && this.toBase != null) {
       let numberToConvertString = String(this.numberToConvert);
@@ -44,22 +45,33 @@ export class NumberBaseConverter {
       }
     }
     
-    if (this.numberToConvert > 0 && this.fromBase == 10 && this.toBase != null && this.fromBase != this.toBase) {
+    if (this.fromBase != null && this.toBase != null && this.fromBase != 10 && this.toBase != 10) {
+      // Convert from non-decimal base to non-decimal base
+      newNumber = this.nonDecToNonDec(this.fromBase, this.toBase)
+    } else if (this.numberToConvert > 0 && this.fromBase == 10 && this.toBase != null && this.fromBase != this.toBase) {
       // Convert from base ten to another base
-      this.fromDecimal(this.toBase);
+      newNumber = this.fromDecimal(this.numberToConvert, this.toBase);
     } else if (this.numberToConvert > 0 && this.fromBase != null && this.toBase == 10 && this.fromBase != this.toBase) {
       // Convert from another base to base ten
-      this.toDecimal(this.fromBase);
+      newNumber = this.toDecimal(this.fromBase);
     }
+
+    this.newBase = String(newNumber);
   }
 
-  fromDecimal(toBase: number) {
+  fromDecimal(number: number, toBase: number) {
     let conversionTable = []
+    let newNumber = "";
 
+    // Check if the function call is coming from the convertBase()-function or
+    // from the nonDecToNonDec()-function
+    if (number == this.numberToConvert) {
+      number = this.numberToConvert
+    }
     // Round down to get only whole numbers
     conversionTable.push({
-      quotient: Math.floor(this.numberToConvert / toBase),
-      remainder: (this.numberToConvert - (Math.floor(this.numberToConvert / toBase) * toBase))
+      quotient: Math.floor(number / toBase),
+      remainder: (number - (Math.floor(number / toBase) * toBase))
     });
 
     // Check the last element of the array's quotient part
@@ -78,12 +90,13 @@ export class NumberBaseConverter {
       })
     }
 
-    console.log(conversionTable)
-
     // The number in the new base is formed from the remainders starting from the end of the array to the beginning
     for (let i = conversionTable.length - 1; i >= 0; i--) {
-      this.newBase += conversionTable[i].remainder;
+      newNumber += conversionTable[i].remainder;
+      console.log(newNumber)
     }
+
+    return Number(newNumber);
   }
 
   toDecimal(fromBase: number) {
@@ -98,6 +111,19 @@ export class NumberBaseConverter {
       length--;
     }
 
-    this.newBase = String(newNumber);
+    return newNumber;
   }
+
+  nonDecToNonDec(fromBase: number, toBase: number) {
+    let newNumber = 0;
+    // When converting from non-decimal base to another non-decimal base, first convert to decimal
+    newNumber = this.toDecimal(fromBase);
+    console.log(newNumber)
+
+    // Then just convert from decimal to wanted base
+    newNumber = this.fromDecimal(newNumber, toBase);
+    console.log(newNumber)
+
+    return newNumber;
+  } 
 }
