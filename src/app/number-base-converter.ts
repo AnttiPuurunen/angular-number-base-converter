@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { from } from 'rxjs';
+import { SelectBaseComponent } from './select-base-component';
 
 @Component({
   selector: 'number-base-converter',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, SelectBaseComponent],
   templateUrl: './number-base-converter.html',
   styleUrl: './number-base-converter.css'
 })
@@ -14,25 +15,28 @@ export class NumberBaseConverter {
   title = 'Number base converter';
   numberToConvert = 0;
   newBase = "";
-  fromBase = null;
-  toBase = null;
-  baseList = [
-    { name: 'two', baseNumber: 2 },
-    { name: 'three', baseNumber: 3 },
-    { name: 'four', baseNumber: 4 },
-    { name: 'five', baseNumber: 5 },
-    { name: 'six', baseNumber: 6 },
-    { name: 'seven', baseNumber: 7 },
-    { name: 'eight', baseNumber: 8 },
-    { name: 'nine', baseNumber: 9 },
-    { name: 'ten', baseNumber: 10 }
-  ]
+  fromBase = 0;
+  toBase = 0;
+  
+  // Comes from select-base-component
+  selectBase(num: Array<number>) {
+    // 1 == comes from the fromBase-component
+    if (num[0] == 1) {
+      this.fromBase = num[1];
+      console.log("fromBase selected: " + this.fromBase)
+    }
+    // 2 == comes from the toBase-component
+    else if (num[0] == 2) {
+      this.toBase = num[1];
+      console.log("toBase selected: " + this.toBase)
+    }
+  }
 
   convertBase() {
     this.newBase = "";
     let newNumber = 0;
 
-    if (this.fromBase != null && this.toBase != null) {
+    if (this.fromBase != 0 && this.toBase != 0) {
       let numberToConvertString = String(this.numberToConvert);
 
       // Check if the number to be converted is valid for the base
@@ -43,15 +47,20 @@ export class NumberBaseConverter {
             return;
           }
       }
+    } else if (this.fromBase == 0 || this.toBase == 0) {
+      this.newBase = "Enter a number greater than zero";
+      return;
     }
     
-    if (this.fromBase != null && this.toBase != null && this.fromBase != 10 && this.toBase != 10) {
+    console.log("Before conversion selection: tobase: " + this.toBase + " frombase: " + this.fromBase)
+
+    if (this.numberToConvert > 0 && this.fromBase != 10 && this.toBase != 10) {
       // Convert from non-decimal base to non-decimal base
       newNumber = this.nonDecToNonDec(this.fromBase, this.toBase)
-    } else if (this.numberToConvert > 0 && this.fromBase == 10 && this.toBase != null && this.fromBase != this.toBase) {
+    } else if (this.numberToConvert > 0 && this.fromBase == 10 && this.toBase != 0 && this.fromBase != this.toBase) {
       // Convert from base ten to another base
       newNumber = this.fromDecimal(this.numberToConvert, this.toBase);
-    } else if (this.numberToConvert > 0 && this.fromBase != null && this.toBase == 10 && this.fromBase != this.toBase) {
+    } else if (this.numberToConvert > 0 && this.fromBase != 0 && this.toBase == 10 && this.fromBase != this.toBase) {
       // Convert from another base to base ten
       newNumber = this.toDecimal(this.fromBase);
     }
@@ -63,6 +72,8 @@ export class NumberBaseConverter {
     let conversionTable = []
     let newNumber = "";
 
+    console.log("After entering fromDecimal");
+    
     // Check if the function call is coming from the convertBase()-function or
     // from the nonDecToNonDec()-function
     if (number == this.numberToConvert) {
@@ -73,7 +84,7 @@ export class NumberBaseConverter {
       quotient: Math.floor(number / toBase),
       remainder: (number - (Math.floor(number / toBase) * toBase))
     });
-
+    console.log("conversionTable formed")
     // Check the last element of the array's quotient part
     while (conversionTable[conversionTable.length - 1].quotient > 0) {
       /* 
@@ -118,11 +129,11 @@ export class NumberBaseConverter {
     let newNumber = 0;
     // When converting from non-decimal base to another non-decimal base, first convert to decimal
     newNumber = this.toDecimal(fromBase);
-    console.log(newNumber)
+    console.log("Non-dec to non-dec after converting to decimal: " + newNumber)
 
     // Then just convert from decimal to wanted base
     newNumber = this.fromDecimal(newNumber, toBase);
-    console.log(newNumber)
+    console.log("After fromDecimal: " + newNumber)
 
     return newNumber;
   } 
