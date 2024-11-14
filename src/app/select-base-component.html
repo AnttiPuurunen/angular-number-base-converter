@@ -1,5 +1,7 @@
-<select [(ngModel)]="fromBase" [(ngModel)]="toBase" (change)="selectBase()">
-    @for (base of baseList; track base.name) {
-    <option>{{base.baseNumber}}</option>
-    }
-</select>
+<div class="select">
+    <select [(ngModel)]="fromBase" [(ngModel)]="toBase" (change)="selectBase()">
+        @for (base of baseList; track base.name) {
+        <option>{{base.baseNumber}}</option>
+        }
+    </select>
+</div>

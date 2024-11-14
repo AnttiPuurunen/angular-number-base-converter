@@ -1,22 +1,36 @@
   h1 {
-    font-size: 3.125rem;
+    font-size: 3.125em;
     color: white;
     font-weight: 500;
     line-height: 100%;
     letter-spacing: -0.125rem;
-    margin: 0;
+    margin: 0.5em;
     font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
   }
 
   p {
-    margin: 0;
+    margin: 0.5em;
     color: var(--gray-700);
   }
 
   .input {
+    width: 50%;
+    min-width: 15ch;
+    max-width: 30ch;
+    border: 1px solid;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    margin: 0.25em; 
+    font-size: 1.25rem;
+    line-height: 1.1;
+  }
+
+  .result {
     margin: 1rem;
+    font-size: 2em;
+    color: white;
   }
 
   .main {
@@ -33,8 +47,15 @@
     position: relative;
   }
 
-  .content {
+  .selectionContent {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
 
+  .conversionContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }

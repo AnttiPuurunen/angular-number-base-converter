@@ -1,0 +1,52 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/* Styles adapted from: https://moderncss.dev/custom-select-styles-with-pure-css/ */
+select {
+    /* A reset of styles, including removing the default dropdown arrow */
+    appearance: none;
+    /* Additional resets for further consistency */
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+  }
+
+.select {
+    display: grid;
+    align-items: center;
+    width: 100%;
+    min-width: 15ch;
+    max-width: 30ch;
+    border: 1px solid;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    margin: 0.25em; 
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+    grid-template-areas: "select";
+}
+
+.select::after {
+    content: "";
+    width: 0.8em;
+    height: 0.5em;
+    background-color: grey;
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+    justify-self: end;
+}
+
+select,
+ .select:after {
+    grid-area: select;
+}

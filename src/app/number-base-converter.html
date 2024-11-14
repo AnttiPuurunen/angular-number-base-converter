@@ -1,12 +1,17 @@
 <div class="main">
     <h1>{{title}}</h1>
     <div class="content">
-        <p>From: </p>
+        <div class="selectionContent">
+        <p>From base: </p>
         <select-base-component id="from" (baseEvent)="selectBase($event)"></select-base-component>
-        <p>To: </p>
+        <p>To base: </p>
         <select-base-component id="to" (baseEvent)="selectBase($event)"></select-base-component>
+    </div>
+    <div class="conversionContent">
+        <p>Enter number:</p>
         <input class="input" type="text" [(ngModel)]="numberToConvert"/>
         <button (click)="convertBase()">Convert</button>
-        <p class="input">{{newBase}}</p>
+        <p class="result">{{newBase}}</p>
+    </div>
     </div>
 </div>
