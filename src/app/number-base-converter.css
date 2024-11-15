@@ -39,7 +39,7 @@
     background: rgb(32,32,40);
     background: linear-gradient(90deg, rgba(32,32,40,1) 0%, rgba(110,165,168,1) 35%, rgba(63,173,195,1) 100%);
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; 
     display: flex;
     flex-direction: column;
     justify-content: center;

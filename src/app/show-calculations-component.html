@@ -1,0 +1,18 @@
+<div>
+    <li>
+        @if (toDec) {
+            @for (element of toDec; track element) {
+                <ul>
+                    {{element}}
+                </ul>
+            }
+        }
+        @if (fromDec) {
+            @for (element of fromDec; track element) {
+                <ul>
+                    {{element}}
+                </ul>
+            }
+        }
+    </li>
+</div>

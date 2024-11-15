@@ -8,3 +8,5 @@ Work in progress. Currently converts:
 - whole numbers from non-decimal base to non-decimal base
 
 Started work on splitting code into smaller components.
+
+Recorded calculation steps and made a component to show them. Needs styling and better positioning.

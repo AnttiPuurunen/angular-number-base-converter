@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { from } from 'rxjs';
 import { SelectBaseComponent } from './select-base-component';
+import { ShowCalculationsComponent } from "./show-calculations-component";
 
 @Component({
   selector: 'number-base-converter',
   standalone: true,
-  imports: [FormsModule, SelectBaseComponent],
+  imports: [FormsModule, SelectBaseComponent, ShowCalculationsComponent],
   templateUrl: './number-base-converter.html',
   styleUrl: './number-base-converter.css'
 })
@@ -17,6 +18,9 @@ export class NumberBaseConverter {
   newBase = "";
   fromBase = 0;
   toBase = 0;
+  // Record calculation steps to be shown
+  fromDecCalculationSteps = new Array<string>();
+  toDecCalculationSteps = new Array<string>();
   
   // Comes from select-base-component
   selectBase(num: Array<number>) {
@@ -51,8 +55,6 @@ export class NumberBaseConverter {
       this.newBase = "Enter a number greater than zero";
       return;
     }
-    
-    console.log("Before conversion selection: tobase: " + this.toBase + " frombase: " + this.fromBase)
 
     if (this.numberToConvert > 0 && this.fromBase != 10 && this.toBase != 10) {
       // Convert from non-decimal base to non-decimal base
@@ -69,10 +71,11 @@ export class NumberBaseConverter {
   }
 
   fromDecimal(number: number, toBase: number) {
-    let conversionTable = []
+    this.fromDecCalculationSteps.length = 0;
+    let conversionTable = [];
     let newNumber = "";
 
-    console.log("After entering fromDecimal");
+    this.fromDecCalculationSteps.push("Convert from Decimal to base " + String(toBase));
     
     // Check if the function call is coming from the convertBase()-function or
     // from the nonDecToNonDec()-function
@@ -84,7 +87,8 @@ export class NumberBaseConverter {
       quotient: Math.floor(number / toBase),
       remainder: (number - (Math.floor(number / toBase) * toBase))
     });
-    console.log("conversionTable formed")
+    this.fromDecCalculationSteps.push(number + ' / ' + toBase + ' = ' + conversionTable[0].quotient + ' Remainder ' + conversionTable[0].remainder);
+
     // Check the last element of the array's quotient part
     while (conversionTable[conversionTable.length - 1].quotient > 0) {
       /* 
@@ -99,6 +103,8 @@ export class NumberBaseConverter {
           conversionTable[conversionTable.length - 1].quotient / toBase > 0 ?
           conversionTable[conversionTable.length - 1].quotient : conversionTable[conversionTable.length - 1].quotient % (toBase * (Math.floor(conversionTable[conversionTable.length - 1].quotient / toBase)))
       })
+
+      this.fromDecCalculationSteps.push(String(conversionTable[conversionTable.length -2].quotient) + ' / ' + toBase + ' = ' + String(conversionTable[conversionTable.length -1].quotient) + ' Remainder ' + String(conversionTable[conversionTable.length -1].remainder))
     }
 
     // The number in the new base is formed from the remainders starting from the end of the array to the beginning
@@ -106,6 +112,8 @@ export class NumberBaseConverter {
       newNumber += conversionTable[i].remainder;
       console.log(newNumber)
     }
+
+    this.fromDecCalculationSteps.push(newNumber);
 
     return Number(newNumber);
   }
@@ -115,12 +123,19 @@ export class NumberBaseConverter {
     let number = String(this.numberToConvert);
     let newNumber = 0;
     let length = number.length;
-    
+    this.toDecCalculationSteps.length = 0;
+    this.toDecCalculationSteps.push("Convert from base " + String(fromBase) + " to Decimal")
     // The number in the new base is constructed from each digit times the base to the power of its place value
     for (let i = 0; i < number.length; i++) {
       newNumber += Number(number[i])*Math.pow(fromBase, length-1);
+      if (this.toDecCalculationSteps.length == 1) 
+        this.toDecCalculationSteps.push(number[i] + ' x ' + String(fromBase) + '^' + String(length-1))
+      else
+        this.toDecCalculationSteps.push('+ ' + number[i] + ' x ' + String(fromBase) + '^' + String(length-1))
       length--;
     }
+
+    this.toDecCalculationSteps.push(String(newNumber));
 
     return newNumber;
   }
