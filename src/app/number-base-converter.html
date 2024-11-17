@@ -1,6 +1,6 @@
+<div class="container">
 <div class="main">
     <h1>{{title}}</h1>
-    <div class="content">
         <div class="selectionContent">
         <p>From base: </p>
         <select-base-component id="from" (baseEvent)="selectBase($event)"></select-base-component>
@@ -11,8 +11,19 @@
         <p>Enter number:</p>
         <input class="input" type="text" [(ngModel)]="numberToConvert"/>
         <button (click)="convertBase()">Convert</button>
-        <p class="result">{{newBase}}</p>
+        @if (newBase && error == "") {
+            <p>Result:</p>
+            <p class="result">{{newBase}}</p>
+            <p>Scroll down for calculation steps</p>
+            <div class="downwardArrow"></div>
+        } @else if (error != "") {
+            <p>{{error}}</p>
+        }
     </div>
-    <show-calculations-component [fromDec]="fromDecCalculationSteps" [toDec]="toDecCalculationSteps"></show-calculations-component>
-    </div>
+</div>
+    @if (newBase && error == "") {
+        <show-calculations-component [fromDec]="fromDecCalculationSteps" [toDec]="toDecCalculationSteps"></show-calculations-component>
+    } @else if (error != "") {
+        <p>{{error}}</p>
+    }
 </div>

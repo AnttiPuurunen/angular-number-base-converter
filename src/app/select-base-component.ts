@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { from } from 'rxjs';
 
 @Component({
   selector: 'select-base-component',

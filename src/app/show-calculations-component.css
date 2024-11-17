@@ -1,3 +1,37 @@
+* {
+    padding: 0;
+}
+
 li {
     list-style-type: none;
+}
+
+li > ul {
+    border-bottom: 1px dashed black;
+    padding: 0.01em;
+}
+
+.calculationsBackground { 
+    height: auto;
+    width: 100%;
+    background: rgb(13,0,36);
+    background: linear-gradient(90deg, rgba(13,0,36,1) 0%, rgba(61,34,98,1) 35%, rgba(98,25,170,1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1em;
+}
+
+.calculationsSteps {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    border-radius: 0.25em;   
+    font-size: 1.25rem;
+    background: white;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 }

@@ -21,6 +21,19 @@ export class NumberBaseConverter {
   // Record calculation steps to be shown
   fromDecCalculationSteps = new Array<string>();
   toDecCalculationSteps = new Array<string>();
+  error = "";
+
+  baseList = [
+    { name: 'two', fancyName: 'binary', baseNumber: 2 },
+    { name: 'three', fancyName: 'ternary',baseNumber: 3 },
+    { name: 'four', fancyName: 'quaternary', baseNumber: 4 },
+    { name: 'five', fancyName: 'quinary', baseNumber: 5 },
+    { name: 'six', fancyName: 'senary', baseNumber: 6 },
+    { name: 'seven', fancyName: 'septenary', baseNumber: 7 },
+    { name: 'eight', fancyName: 'octal', baseNumber: 8 },
+    { name: 'nine', fancyName: 'nonary', baseNumber: 9 },
+    { name: 'ten', fancyName: 'decimal', baseNumber: 10 }
+  ]
   
   // Comes from select-base-component
   selectBase(num: Array<number>) {
@@ -39,6 +52,7 @@ export class NumberBaseConverter {
   convertBase() {
     this.newBase = "";
     let newNumber = 0;
+    this.error = "";
 
     if (this.fromBase != 0 && this.toBase != 0) {
       let numberToConvertString = String(this.numberToConvert);
@@ -47,12 +61,12 @@ export class NumberBaseConverter {
       // Each digit in the number has to be smaller than the base it is in
       for (let i = 0; i < numberToConvertString.length; i++) {
           if (Number(numberToConvertString[i]) >= this.fromBase) {
-            this.newBase = "Invalid number entered";
+            this.error = "Invalid number entered";
             return;
           }
       }
     } else if (this.fromBase == 0 || this.toBase == 0) {
-      this.newBase = "Enter a number greater than zero";
+      this.error = "Enter a number greater than zero";
       return;
     }
 
@@ -74,8 +88,9 @@ export class NumberBaseConverter {
     this.fromDecCalculationSteps.length = 0;
     let conversionTable = [];
     let newNumber = "";
+    let fancyName = this.baseList.find((element) => element.baseNumber == toBase);
 
-    this.fromDecCalculationSteps.push("Convert from Decimal to base " + String(toBase));
+    this.fromDecCalculationSteps.push("Convert from base 10 (decimal) to base " + String(toBase) + " (" + fancyName?.fancyName +"):");
     
     // Check if the function call is coming from the convertBase()-function or
     // from the nonDecToNonDec()-function
@@ -123,8 +138,9 @@ export class NumberBaseConverter {
     let number = String(this.numberToConvert);
     let newNumber = 0;
     let length = number.length;
+    let fancyName = this.baseList.find((element) => element.baseNumber == fromBase);
     this.toDecCalculationSteps.length = 0;
-    this.toDecCalculationSteps.push("Convert from base " + String(fromBase) + " to Decimal")
+    this.toDecCalculationSteps.push("Convert from base " + String(fromBase) + " (" + fancyName?.fancyName + ") to base 10 (decimal):")
     // The number in the new base is constructed from each digit times the base to the power of its place value
     for (let i = 0; i < number.length; i++) {
       newNumber += Number(number[i])*Math.pow(fromBase, length-1);
