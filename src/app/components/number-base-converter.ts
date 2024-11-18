@@ -10,7 +10,7 @@ import { ShowCalculationsComponent } from "./show-calculations-component";
   standalone: true,
   imports: [FormsModule, SelectBaseComponent, ShowCalculationsComponent],
   templateUrl: './number-base-converter.html',
-  styleUrl: './number-base-converter.css'
+  styleUrl: '../styles/number-base-converter.css'
 })
 export class NumberBaseConverter {
   title = 'Number base converter';

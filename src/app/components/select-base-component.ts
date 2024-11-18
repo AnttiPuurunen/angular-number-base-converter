@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './select-base-component.html',
-  styleUrl: './select-base-component.css'
+  styleUrl: '../styles/select-base-component.css'
 })
 
 export class SelectBaseComponent {

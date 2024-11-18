@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './show-calculations-component.html',
-  styleUrl: './show-calculations-component.css'
+  styleUrl: '../styles/show-calculations-component.css'
 })
 
 export class ShowCalculationsComponent {
