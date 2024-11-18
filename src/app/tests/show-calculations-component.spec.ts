@@ -3,7 +3,7 @@ import { ShowCalculationsComponent } from '../components/show-calculations-compo
 
 let fixture: ComponentFixture<ShowCalculationsComponent>;
 
-describe('Select Base Component', () => {
+describe('Show Calculations Component', () => {
   beforeEach( () => {
     fixture = TestBed.createComponent(ShowCalculationsComponent)
     fixture.autoDetectChanges();
@@ -14,12 +14,12 @@ describe('Select Base Component', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'my-first-angular-app' title`, () => {
+  it(`should be an instance of "Show Calculations Component"`, () => {
     const app = fixture.componentInstance;
     expect(app).toBeInstanceOf(ShowCalculationsComponent);
   });
 
-  it('should render title', () => {
+  it('<div>-element should should have className calculationsBackground', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('div')).toHaveClass('calculationsBackground');

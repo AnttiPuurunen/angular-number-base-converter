@@ -23,4 +23,22 @@ describe('Select Base Component', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('select')?.options).toBeDefined();
   });
+
+  it('select base options has the desired amount of options', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('select')?.childElementCount).toEqual(9);
+  });
+
+  it('select base options should have desired option choices', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const optionsList = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let correctOptions = [];
+
+    compiled.querySelectorAll('option')?.forEach( optionElements => {
+        if (Number(optionElements.value) == optionsList[optionElements.index])
+            correctOptions.push(Number(optionElements.value));
+        });
+
+    expect(correctOptions.length).toBe(9);
+  });
 });
